@@ -97,7 +97,7 @@
   # Spring cache
    
    To avoid multiple calls to the provider(Here Maps) the response is ideally cached in memory,Response will be cached for parrallel calls and as well as standalone services.
-   CacheEvict is Scheduled to clear caches frequently with timelimit
+   CacheEvict is Scheduled to clear caches frequently with timelimit of 5 minutes.
   
   ---------------------------------------
   Refer example folder for clear view
