@@ -38,6 +38,8 @@ class RestServices {
     @GetMapping("/getdata/{at}/{size}")
     fun testApiData(@PathVariable at:String , @PathVariable size:Int): Flux<Any> {
 
+        println("*** Returning NOT from cache ***")
+
         val shoppingUri: UriComponents = UriComponentsBuilder.newInstance().path("/parking-facility/get").queryParam("at",at).queryParam("cat","shopping").queryParam("size" , size).build()
 
         val eatDrinkUri: UriComponents = UriComponentsBuilder.newInstance().path("/eat-drink/get").queryParam("at",at).queryParam("cat","eat-drink").queryParam("size" , size).build()
@@ -57,6 +59,8 @@ class RestServices {
     @GetMapping("/getdata/{at}")
     fun testApiDatawithAt(@PathVariable at:String): Flux<Any> {
 
+        println("*** Returning NOT from cache ***")
+
         val defaultSize = 3
 
         val shoppingUri: UriComponents = UriComponentsBuilder.newInstance().path("/parking-facility/get").queryParam("at",at).queryParam("cat","shopping").queryParam("size" , defaultSize).build()
@@ -73,4 +77,28 @@ class RestServices {
 
         return Flux.merge(shoppingresult , eatDrinkresult , chargingStationresult)
     }
+
+
+    @Cacheable(value = ["chargingrestcall"] , key= "{ #root.methodName , #prox }")
+    @GetMapping("/getVCS/{prox}")
+    fun restApi(@PathVariable prox:String): Flux<Any> {
+
+        println("*** Returning NOT from cache ***")
+
+        val shoppingUri: UriComponents = UriComponentsBuilder.newInstance().path("/parking-facility/getService").queryParam("prox",prox).build()
+
+        val eatDrinkUri: UriComponents = UriComponentsBuilder.newInstance().path("/eat-drink/getService").queryParam("prox",prox).build()
+
+        val chargingStationUri: UriComponents = UriComponentsBuilder.newInstance().path("/charging-station/getService").queryParam("prox",prox).build()
+
+        val onStreetresult: Mono<Any> = webclient.get().uri(shoppingUri.toString()).accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono<Any>()
+
+        val OffStreetresult : Mono<Any> = webclient.get().uri(eatDrinkUri.toString()).accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono<Any>()
+
+        val chargingStationresult : Mono<Any> = webclient.get().uri(chargingStationUri.toString()).accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono<Any>()
+
+        return Flux.merge(onStreetresult , OffStreetresult , chargingStationresult)
+    }
+
+
 }
