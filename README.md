@@ -13,21 +13,15 @@
  
  # Services
  
-   # 1.Charging Service 
+   # 1.Charging Service Api
       
-     -call to EV-Charging Station Using Api key (Access error due to RBAC )
-      so
-     -call to Petrol Stations Using Api key
-     
-   # 2.Parking facility Service 
-      
-     -call to On-Street Parking Using Api key (Access error due to RBAC )
-      so
-     -call to Petrol Stations Using Api key 
-     
-   # 3.Eat Drink Service 
-      
-     call to Eat-drink api Using Api key   as below 
+   # 2.Parking facility Api 
+         
+   # 3.Eat Drink Api 
+   
+   # 4.Gateway
+   
+   # 5.Eureka Server
  
  # Url's to Services
  
@@ -47,16 +41,15 @@
  
   under examples folder i have attached screenshot of servical examples for better understandinf
   
-  
  ------------------------------------------------------------------- 
  # Microservice Call to discover nearby places /getdata/{location}
  -------------------------------------------------------------------
  
  this rest api will parallel call to HERE MAP rest API's to get nearby location Services under categories of
              
-             1.PETROL STATION  under  Charging Station API Service
-             2.EAT DRINK  under   Eat Drink Api Service
-             3.SHOPPING  under  Parking Facility Api Service
+             1. Category = PETROL STATION  & in Microservice = Charging Station API Service
+             2. Category = EAT DRINK  & in Microservice   Eat Drink Api Service
+             3. Category = SHOPPING  & in Microservice  Parking Facility Api Service
 
  # Microservice parrallel calls with location as parameter to return 3 nearest POI's
 
@@ -72,9 +65,9 @@
  
  this rest api will parallel call to HERE MAP rest API's to get nearby location Services under categories of
              
-             1.On-Street Parking  under  Parking Facility Api Service
-             2.Off-Street Parking  under  Eat Drink Api Service
-             3.EV-Charging-Station  under  Charging Station API Service
+             1. Category = On-Street Parking  & in Microservice =  Parking Facility Api Service
+             2. Category = Off-Street Parking  & in Microservice =  Eat Drink Api Service
+             3. Category = EV-Charging-Station  & in Microservice =  Charging Station API Service
 
  # Microservice parrallel calls with location as parameter to return 3 nearest POI's
 
