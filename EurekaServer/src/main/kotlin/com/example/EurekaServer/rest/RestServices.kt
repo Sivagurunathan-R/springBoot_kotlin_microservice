@@ -55,7 +55,7 @@ class RestServices {
         return Flux.merge(shoppingresult , eatDrinkresult , chargingStationresult)
     }
 
-    @Cacheable(value = ["chargingrestcall"] , key= "{ #root.methodName , #at }")
+    @Cacheable(value = ["chargingrestcallwith"] , key= "{ #root.methodName , #at }")
     @GetMapping("/getdata/{at}")
     fun testApiDatawithAt(@PathVariable at:String): Flux<Any> {
 
@@ -79,7 +79,7 @@ class RestServices {
     }
 
 
-    @Cacheable(value = ["chargingrestcall"] , key= "{ #root.methodName , #prox }")
+    @Cacheable(value = ["chargingrestapi"] , key= "{ #root.methodName , #prox }")
     @GetMapping("/getVCS/{prox}")
     fun restApi(@PathVariable prox:String): Flux<Any> {
 

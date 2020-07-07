@@ -51,7 +51,7 @@ class RestControllers {
 
     }
 
-    @Cacheable(value = ["onstreetrestapi"] , key= "{ #root.methodName , #prox }")
+    @Cacheable(value = ["offstreetrestapi"] , key= "{ #root.methodName , #prox }")
     @GetMapping("/getService")
     fun offstreetStationapi(@RequestParam prox:String): Mono<Any> {
 
