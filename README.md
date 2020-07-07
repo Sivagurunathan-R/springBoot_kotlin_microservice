@@ -9,7 +9,6 @@
    Microservice
    webflux,web
    
-  
    I have used Mono<Any> here as a return type since we are not used any Database to store the data or service class to return particular object , so  i didnt use Model/pojo     class as a return type.
  
  # Services
@@ -41,8 +40,17 @@
   Parking facility is running on http://localhost8781
  
   gataway is mapped to three services under http://localhost:8080
-
+  
+ ------------------------------------------------------------------- 
+ # Microservice Call to discover nearby places /getdata/{location}
+ -------------------------------------------------------------------
  
+ this rest api will parallel call to HERE MAP rest API's to get nearby location Services under categories of
+             
+             1.PETROL STATION  under  Charging Station API Service
+             2.EAT DRINK  under   Eat Drink Api Service
+             3.SHOPPING  under  Parking Facility Api Service
+
  # Microservice parrallel calls with location as parameter to return 3 nearest POI's
 
        localhost:8761/getdata/52.5166,13.3778          // 52.5166,13.3778 -> location parameter need to be passed default size is 3
@@ -50,16 +58,38 @@
  # Microservice calls with location as parameter and size as parameter
   
        localhost:8761/getdata/52.5166,13.3778/1        // 52.5166,13.3778 -> location parameter and 1 is size
-      
-      
- Each Microservices calling HereMap Rest Api's to Get Datas, all the calls are executed under port 8080
+       
+ -------------------------------------------------------------------------
+ # Microservice Call to Vehicle Connected Service /getVCS/{location}
+ -------------------------------------------------------------------------
  
-     example url :http://localhost:8080/parking-facility/get?at=52.5164%2C13.3742&cat=shopping&size=3
+ this rest api will parallel call to HERE MAP rest API's to get nearby location Services under categories of
+             
+             1.On-Street Parking  under  Parking Facility Api Service
+             2.Off-Street Parking  under  Eat Drink Api Service
+             3.EV-Charging-Station  under  Charging Station API Service
+
+ # Microservice parrallel calls with location as parameter to return 3 nearest POI's
+
+       localhost:8761/getVCS/52.5166,13.3778          // 52.5166,13.3778 -> location parameter need to be passed default size is 3
+      
+ -------------------------------------------------------------------------
+ # Microservice Call to Vehicle Connected Service /hello
+ -------------------------------------------------------------------------
+
+ Sends rest calls to three microservices to know whether services are up, which returns hello message from all services
+ 
+       localhost:8761/hello 
+ 
+ # Zuul Gateway Proxy
+   
+   All the MicroService call ports are Mapped to zuul gateway under 8080, so that 8080 port can access microservice mapped rest API's
+     
+       example url :http://localhost:8080/parking-facility/get?at=52.5164%2C13.3742&cat=shopping&size=3
 
   # Spring cache
    
    To avoid multiple calls to the provider(Here Maps) the response is ideally cached in memory,Response will be cached for parrallel calls and as well as standalone services.
-   
-   
+   CacheEvict is Scheduled to clear caches frequently with timelimit
   
   
